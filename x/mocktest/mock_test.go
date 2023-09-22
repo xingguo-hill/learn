@@ -10,6 +10,7 @@ import (
 
 func TestMyThing(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
 	mockObjB := xtestmock.NewMockMyInterfaceB(mockCtrl)
 	mockObjB.EXPECT().SomeMethodB("hello").Return("hello world!")
 	b := NewBObj(A{"hello"})

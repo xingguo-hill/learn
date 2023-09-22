@@ -15,7 +15,7 @@ func Run() {
 func DeferClosure() {
 	i := 0
 	defer func() {
-		println(i)
+		fmt.Println(i)
 	}()
 	i = 1
 }
@@ -23,23 +23,15 @@ func DeferClosure() {
 func DeferClosureV1() {
 	i := 0
 	defer func(val int) {
-		println(val)
+		fmt.Println(val)
 	}(i)
 	i = 1
-}
-
-func DeferClosureLoopV1() {
-	for i := 0; i < 10; i++ {
-		defer func() {
-			println(i)
-		}()
-	}
 }
 
 func YourName(name string, alias ...string) {
 	if len(alias) > 0 {
 		fmt.Printf("%#v", alias)
-		println(len(alias))
+		fmt.Println(len(alias))
 	}
 }
 
@@ -47,7 +39,7 @@ func YourNameInvoke() {
 	YourName := func(name string, alias ...string) {
 		if len(alias) > 0 {
 			fmt.Printf("%#v", alias)
-			println(len(alias))
+			fmt.Println(len(alias))
 		}
 	}
 	YourName("Deng Ming")

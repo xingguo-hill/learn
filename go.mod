@@ -3,7 +3,6 @@ module learn
 go 1.21.0
 
 require (
-	github.com/go-playground/assert/v2 v2.2.0
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cast v1.5.1

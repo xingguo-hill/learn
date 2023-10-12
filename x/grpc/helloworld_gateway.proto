@@ -1,0 +1,24 @@
+//生成命令：protoc --go_out=x/grpc/ --go-grpc_out=x/grpc/ --grpc-gateway_opt=x/grpc/ x/grpc/helloworld.proto
+syntax = "proto3";
+option go_package = "./;helloworld";
+package helloworld;
+import "google/api/annotations.proto";
+service GreeterGW {
+  rpc SayHelloGWJSon (HelloRequestGW) returns (HelloReplyGW){
+    option (google.api.http) = {
+      //grpc->http gateway -> json
+      post : "/api/sayHello"
+      body : "*"
+    };
+  }
+}
+
+message HelloRequestGW {
+  string who = 1;
+  int32 your_age =2;
+}
+
+message HelloReplyGW {
+  string name  = 1;
+  int32 age  = 2;
+}

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"testing"
 
 	pb "learn/x/grpc" // 导入生成的 pb 文件
 
@@ -23,7 +24,7 @@ func (s *server) SayHelloKeyMap(ctx context.Context, in *pb.HelloRequest) (*pb.K
 	a = append(a, &pb.HelloReply{Name: "MyName2:" + in.Who, Age: in.YourAge + 1})
 	return &pb.KeyValueMap{MyMap: a}, nil
 }
-func main() {
+func TestServer(t *testing.T) {
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

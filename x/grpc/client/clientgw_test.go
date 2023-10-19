@@ -93,5 +93,5 @@ func TestGRPC(t *testing.T) {
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("%s,%d\n", r1.Name, r1.Age)
+	log.Printf("%s,%d\n", r1.MyName, r1.Age)
 }

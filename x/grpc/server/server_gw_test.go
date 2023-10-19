@@ -13,6 +13,7 @@ import (
 	"github.com/spf13/cast"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 type servergw struct {
@@ -21,7 +22,7 @@ type servergw struct {
 
 func (s *servergw) SayHelloGWJSon(ctx context.Context, in *pb.HelloRequestGW) (*pb.HelloReplyGW, error) {
 	log.Printf("%v,%v", in.Who, in.YourAge)
-	return &pb.HelloReplyGW{Name: "Post MyName:" + in.Who, Age: in.YourAge}, nil
+	return &pb.HelloReplyGW{MyName: "Post MyName:" + in.Who, Age: in.YourAge}, nil
 }
 func (s *servergw) SayHelloGWGet(ctx context.Context, in *pb.HelloGetRequestGW) (*pb.HelloGetReplyGW, error) {
 	return &pb.HelloGetReplyGW{Msg: "Get id:" + cast.ToString(in.GetId())}, nil
@@ -50,7 +51,17 @@ func TestGWServer(t *testing.T) {
 	if err != nil {
 		log.Fatalln("Failed to dial server:", err)
 	}
-	gwmux := runtime.NewServeMux()
+	//封送处理器
+	opt := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{
+			UseProtoNames:  true, //使用.proto变量设置，默认为false会转成驼峰
+			UseEnumNumbers: true,
+		},
+	})
+	gwmux := runtime.NewServeMux(opt)
+
+	//不设置头信息
+	// gwmux := runtime.NewServeMux()
 	// 注册Greeter
 	err = pb.RegisterGreeterGWHandler(context.Background(), gwmux, conn)
 	if err != nil {

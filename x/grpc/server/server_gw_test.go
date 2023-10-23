@@ -67,7 +67,7 @@ func TestGWServer(t *testing.T) {
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
-
+	//与http.ListenAndServe(":81", gwmux)实现类似的功能，区别可以配置更多的http参数
 	gwServer := &http.Server{
 		Addr:    ":81",
 		Handler: gwmux,

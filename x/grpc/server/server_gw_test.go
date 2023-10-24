@@ -7,7 +7,8 @@ import (
 	"net/http"
 	"testing"
 
-	pb "learn/x/grpc" // 导入生成的 pb 文件
+	pbhello "learn/x/grpc/helloworld" // 导入生成的 pb 文件
+	pb "learn/x/grpc/helloworldgw"    // 导入生成的 pb 文件
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/spf13/cast"
@@ -20,7 +21,7 @@ type servergw struct {
 	pb.UnimplementedGreeterGWServer
 }
 
-func (s *servergw) SayHelloGWJSon(ctx context.Context, in *pb.HelloRequestGW) (*pb.HelloReplyGW, error) {
+func (s *servergw) SayHelloGWJSon(ctx context.Context, in *pbhello.HelloRequest) (*pb.HelloReplyGW, error) {
 	log.Printf("%v,%v", in.Who, in.YourAge)
 	return &pb.HelloReplyGW{MyName: "Post MyName:" + in.Who, Age: in.YourAge}, nil
 }

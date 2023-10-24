@@ -1,11 +1,12 @@
 //生成命令：cd learn/x/grpc/; protoc --go_out=. --go-grpc_out=. --grpc-gateway_out=. helloworld_gateway.proto
 syntax = "proto3";
-option go_package = "./;helloworld";
-package helloworld;
+option go_package = "learn/x/grpc/helloworldgw/";
+package testrpc.helloworldgw;
+import "x/grpc/helloworld/helloworld.proto";
 import "google/api/annotations.proto";
 service GreeterGW {
   //这里定义接口函数
-  rpc SayHelloGWJSon (HelloRequestGW) returns (HelloReplyGW){
+  rpc SayHelloGWJSon (helloworld.HelloRequest) returns (HelloReplyGW){
     option (google.api.http) = {
       post : "/api/sayHello"
       body : "*"
@@ -22,15 +23,11 @@ service GreeterGW {
   }
 }
 
-message HelloRequestGW {
-  string who = 1;
-  int32 your_age =2;
-}
-
 message HelloReplyGW {
   string my_name  = 1;
   int32 age  = 2;
 }
+
 message HelloGetRequestGW {
   int32 id  = 2;
 }

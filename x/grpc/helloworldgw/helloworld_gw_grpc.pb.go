@@ -4,15 +4,16 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.24.3
-// source: helloworld_gateway.proto
+// source: x/grpc/helloworldgw/helloworld_gw.proto
 
-package helloworld
+package helloworldgw
 
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	helloworld "learn/x/grpc/helloworld"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -21,8 +22,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	GreeterGW_SayHelloGWJSon_FullMethodName = "/helloworld.GreeterGW/SayHelloGWJSon"
-	GreeterGW_SayHelloGWGet_FullMethodName  = "/helloworld.GreeterGW/SayHelloGWGet"
+	GreeterGW_SayHelloGWJSon_FullMethodName = "/testrpc.helloworldgw.GreeterGW/SayHelloGWJSon"
+	GreeterGW_SayHelloGWGet_FullMethodName  = "/testrpc.helloworldgw.GreeterGW/SayHelloGWGet"
 )
 
 // GreeterGWClient is the client API for GreeterGW service.
@@ -30,7 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GreeterGWClient interface {
 	// 这里定义接口函数
-	SayHelloGWJSon(ctx context.Context, in *HelloRequestGW, opts ...grpc.CallOption) (*HelloReplyGW, error)
+	SayHelloGWJSon(ctx context.Context, in *helloworld.HelloRequest, opts ...grpc.CallOption) (*HelloReplyGW, error)
 	SayHelloGWGet(ctx context.Context, in *HelloGetRequestGW, opts ...grpc.CallOption) (*HelloGetReplyGW, error)
 }
 
@@ -42,7 +43,7 @@ func NewGreeterGWClient(cc grpc.ClientConnInterface) GreeterGWClient {
 	return &greeterGWClient{cc}
 }
 
-func (c *greeterGWClient) SayHelloGWJSon(ctx context.Context, in *HelloRequestGW, opts ...grpc.CallOption) (*HelloReplyGW, error) {
+func (c *greeterGWClient) SayHelloGWJSon(ctx context.Context, in *helloworld.HelloRequest, opts ...grpc.CallOption) (*HelloReplyGW, error) {
 	out := new(HelloReplyGW)
 	err := c.cc.Invoke(ctx, GreeterGW_SayHelloGWJSon_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -65,7 +66,7 @@ func (c *greeterGWClient) SayHelloGWGet(ctx context.Context, in *HelloGetRequest
 // for forward compatibility
 type GreeterGWServer interface {
 	// 这里定义接口函数
-	SayHelloGWJSon(context.Context, *HelloRequestGW) (*HelloReplyGW, error)
+	SayHelloGWJSon(context.Context, *helloworld.HelloRequest) (*HelloReplyGW, error)
 	SayHelloGWGet(context.Context, *HelloGetRequestGW) (*HelloGetReplyGW, error)
 	mustEmbedUnimplementedGreeterGWServer()
 }
@@ -74,7 +75,7 @@ type GreeterGWServer interface {
 type UnimplementedGreeterGWServer struct {
 }
 
-func (UnimplementedGreeterGWServer) SayHelloGWJSon(context.Context, *HelloRequestGW) (*HelloReplyGW, error) {
+func (UnimplementedGreeterGWServer) SayHelloGWJSon(context.Context, *helloworld.HelloRequest) (*HelloReplyGW, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SayHelloGWJSon not implemented")
 }
 func (UnimplementedGreeterGWServer) SayHelloGWGet(context.Context, *HelloGetRequestGW) (*HelloGetReplyGW, error) {
@@ -94,7 +95,7 @@ func RegisterGreeterGWServer(s grpc.ServiceRegistrar, srv GreeterGWServer) {
 }
 
 func _GreeterGW_SayHelloGWJSon_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HelloRequestGW)
+	in := new(helloworld.HelloRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -106,7 +107,7 @@ func _GreeterGW_SayHelloGWJSon_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: GreeterGW_SayHelloGWJSon_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GreeterGWServer).SayHelloGWJSon(ctx, req.(*HelloRequestGW))
+		return srv.(GreeterGWServer).SayHelloGWJSon(ctx, req.(*helloworld.HelloRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,7 +134,7 @@ func _GreeterGW_SayHelloGWGet_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var GreeterGW_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "helloworld.GreeterGW",
+	ServiceName: "testrpc.helloworldgw.GreeterGW",
 	HandlerType: (*GreeterGWServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -146,5 +147,5 @@ var GreeterGW_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "helloworld_gateway.proto",
+	Metadata: "x/grpc/helloworldgw/helloworld_gw.proto",
 }

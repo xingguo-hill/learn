@@ -1,7 +1,6 @@
-//生成命令：protoc --go_out=x/grpc/ --go-grpc_out=x/grpc/ x/grpc/helloworld.proto
 syntax = "proto3";
-option go_package = "./;helloworld";
-package helloworld;
+option go_package = "learn/x/grpc/helloworld";
+package testrpc.helloworld;
 
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply);

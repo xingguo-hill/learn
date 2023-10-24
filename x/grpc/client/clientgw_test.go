@@ -5,7 +5,8 @@ import (
 	"context"
 	"fmt"
 	"io"
-	pb "learn/x/grpc"
+	pbhello "learn/x/grpc/helloworld"
+	pb "learn/x/grpc/helloworldgw"
 	"log"
 	"net/http"
 	"testing"
@@ -89,7 +90,7 @@ func TestGRPC(t *testing.T) {
 	c := pb.NewGreeterGWClient(conn)
 
 	name := "Alice"
-	r1, err := c.SayHelloGWJSon(context.Background(), &pb.HelloRequestGW{Who: name, YourAge: 18})
+	r1, err := c.SayHelloGWJSon(context.Background(), &pbhello.HelloRequest{Who: name, YourAge: 18})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

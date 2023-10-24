@@ -6,7 +6,7 @@ import (
 	"net"
 	"testing"
 
-	pb "learn/x/grpc" // 导入生成的 pb 文件
+	pb "learn/x/grpc/helloworld" // 导入生成的 pb 文件
 
 	"google.golang.org/grpc"
 )

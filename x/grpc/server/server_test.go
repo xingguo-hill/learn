@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"testing"
@@ -9,6 +10,7 @@ import (
 	pb "learn/x/grpc/helloworld" // 导入生成的 pb 文件
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 )
 
 type server struct {
@@ -16,7 +18,16 @@ type server struct {
 }
 
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	return &pb.HelloReply{Name: "MyName:" + in.Who, Age: in.YourAge}, nil
+	// 从响应中提取返回的元数据
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		fmt.Println("无法提取元数据")
+	}
+	authToken := md.Get("auth-token")
+	traceId := md.Get("trace-id")
+	return &pb.HelloReply{
+		Name: "MyName:" + in.Who + "; ctx: auth-token=" + authToken[0] + "&trace-id=" + traceId[0],
+		Age:  in.YourAge}, nil
 }
 func (s *server) SayHelloKeyMap(ctx context.Context, in *pb.HelloRequest) (*pb.KeyValueMap, error) {
 	a := make([]*pb.HelloReply, 0)

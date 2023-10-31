@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/metadata"
 )
 
 func TestDebug(t *testing.T) {
@@ -34,7 +35,16 @@ func TestDebug(t *testing.T) {
 		name = os.Args[1]
 	}
 
-	r1, err := c.SayHello(context.Background(), &pb.HelloRequest{Who: name, YourAge: 18})
+	//上下文变量传递
+	md := metadata.New(map[string]string{
+		"auth-token": "YOUR_AUTH_TOKEN_HERE",
+		"trace-id":   "123456789",
+	})
+
+	// 将元数据附加到 gRPC 上下文中
+	ctx := metadata.NewOutgoingContext(context.Background(), md)
+
+	r1, err := c.SayHello(ctx, &pb.HelloRequest{Who: name, YourAge: 18})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

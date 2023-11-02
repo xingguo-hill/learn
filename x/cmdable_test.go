@@ -10,12 +10,11 @@ type I struct {
 }
 
 type Cmdable interface {
-	A(int) int
+	A(int)
 }
 
-func (i *I) A(a int) int {
+func (i *I) A(a int) {
 	fmt.Println(a)
-	return a
 }
 func (i *I) B(b string) string {
 	fmt.Println(b)
@@ -23,12 +22,14 @@ func (i *I) B(b string) string {
 }
 
 func YourTest() Cmdable {
-	i := &I{}
+	i := &I{NoUse: 1}
 	i.A(1)
 	return i
 }
 
 func TestYourTest(t *testing.T) {
-	YourTest()
+	//因此发生隐式转换，ti为接口，不再是结构体I
+	ti := YourTest()
+	fmt.Printf("%#v", ti)
 	t.Log("测试中!")
 }

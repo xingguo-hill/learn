@@ -22,7 +22,7 @@ func TestDebug(t *testing.T) {
 		Timeout:             20 * time.Second,
 		PermitWithoutStream: true,
 	}
-	//ginsecure.NewCredentials() 无需TLS
+	//insecure.NewCredentials() 无需TLS
 	conn, err := grpc.Dial("127.0.0.1:50051", lb, grpc.WithKeepaliveParams(keepAlive), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)

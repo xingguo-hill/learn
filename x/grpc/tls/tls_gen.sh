@@ -1,28 +1,16 @@
 #!/bin/bash
-#根证书
-openssl genrsa -out ca.key 2048
-openssl req -new -x509 -days 3650 \
-    -subj "/C=GB/L=China/O=gobook/CN=github.com" \
-    -key ca.key -out ca.crt
+#根证书 
+subj="/C=GB/L=BeiJing/O=Personal/CN=XG"
+days=36500
+openssl genrsa -out pem/ca.key 2048
+openssl req -new -x509 -days $days -subj "$subj" -key pem/ca.key -out pem/ca.crt 
 #服务端证书
-openssl genrsa -out server.key 2048
-openssl req -new \
-    -subj "/C=GB/L=China/O=server/CN=server.io" \
-    -key server.key \
-    -out server.csr
-openssl x509 -req -sha256 \
-    -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 \
-    -in server.csr \
-    -out server.crt
+openssl genrsa -out pem/server.key 2048
+openssl req -new -subj "$subj" -key pem/server.key -out pem/server.csr 
+openssl x509 -req -sha256 -CA pem/ca.crt -CAkey pem/ca.key -CAcreateserial -days $days -in pem/server.csr -out pem/server.crt -extensions req_ext -extfile conf/san.conf 
 
 #客户端证书
-openssl genrsa -out client.key 2048
-openssl req -new \
-    -subj "/C=GB/L=China/O=client/CN=client.io" \
-    -key client.key \
-    -out client.csr
-openssl x509 -req -sha256 \
-    -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 \
-    -in client.csr \
-    -out client.crt
-rm -f server.csr client.csr
+openssl genrsa -out pem/client.key 2048
+openssl req -new -subj "$subj" -key pem/client.key -out pem/client.csr 
+openssl x509 -req -sha256 -CA pem/ca.crt -CAkey pem/ca.key -CAcreateserial -days $days -in pem/client.csr -out pem/client.crt -extensions req_ext -extfile conf/san.conf 
+rm -f pem/server.csr pem/client.csr

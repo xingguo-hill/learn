@@ -1,6 +1,7 @@
 .DS_Store
 .mod
 .sum
-.pb.go
-.swagger.json
+*.pb.go
+*.gw.go
+*.swagger.json
 x/grpc/tls/pem/

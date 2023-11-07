@@ -7,7 +7,7 @@ openssl req -new -x509 -days $days -subj "$subj" -key pem/ca.key -out pem/ca.crt
 #服务端证书
 openssl genrsa -out pem/server.key 2048
 openssl req -new -subj "$subj" -key pem/server.key -out pem/server.csr 
-openssl x509 -req -sha256 -CA pem/ca.crt -CAkey pem/ca.key -CAcreateserial -days $days -in pem/server.csr -out pem/server.crt -extensions req_ext -extfile conf/san.conf 
+openssl x509 -req -sha256 -CA pem/ca.crt -CAkey pem/ca.key -CAcreateserial -days $days -in pem/server.csr -out pem/server.crt -extensions req_ext -extfile conf/sans.conf 
 
 #客户端证书
 openssl genrsa -out pem/client.key 2048

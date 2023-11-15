@@ -13,6 +13,8 @@ func TestDuration(t *testing.T) {
 	duration := time.Now().Sub(t1)
 	fmt.Printf("sleep %d秒，历时%d秒\n", deleySecond, int(duration.Seconds()))
 }
+
+// 定时器的使用
 func TestTimer(t *testing.T) {
 	i := 0
 	d := time.Duration(1) * time.Second
@@ -28,4 +30,22 @@ func TestTimer(t *testing.T) {
 			timer.Reset(d)
 		}
 	}
+}
+
+// 时间对象格式化输出
+func TestTimeFormat(t *testing.T) {
+	t1 := time.Now().Format("2006-01-02 15:04:05")
+	fmt.Println(t1)
+}
+
+// 指定日期转化为时间对象
+func TestDateToTime(t *testing.T) {
+	// 指定的日期字符串
+	dateString := "2023-10-30"
+	// 定义日期和时间的格式
+	layout := "2006-01-02"
+	// 将日期字符串解析为时间对象
+	parsedTime, _ := time.Parse(layout, dateString)
+	// 输出解析后的时间对象
+	fmt.Println(parsedTime)
 }

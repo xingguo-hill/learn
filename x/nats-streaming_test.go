@@ -117,6 +117,7 @@ func TestQueueDurableSubscribe(t *testing.T) {
 }
 
 func TestPublish(t *testing.T) {
+
 	servers, clusterID := getNatStremingServices()
 	//客户端唯一标志,特殊符号只支持 “-” 或 “_”
 	clientID := "publisher"
@@ -126,9 +127,10 @@ func TestPublish(t *testing.T) {
 	}
 	defer sc.Close()
 	// 同步带阻塞发布
-
-	err = sc.Publish("foo", []byte(time.Now().Format("2006-01-02 15:04:05"))) // does not return until an ack has been received from NATS Streaming
-	if err != nil {
-		logrus.Fatalln(err)
+	for i := 0; i < 10; i++ {
+		err = sc.Publish("foo", []byte(time.Now().Format("2006-01-02 15:04:05"))) // does not return until an ack has been received from NATS Streaming
+		if err != nil {
+			logrus.Fatalln(err)
+		}
 	}
 }

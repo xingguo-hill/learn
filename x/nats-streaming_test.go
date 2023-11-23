@@ -128,7 +128,8 @@ func TestPublish(t *testing.T) {
 	defer sc.Close()
 	// 同步带阻塞发布
 	for i := 0; i < 10; i++ {
-		err = sc.Publish("foo", []byte(time.Now().Format("2006-01-02 15:04:05"))) // does not return until an ack has been received from NATS Streaming
+		// does not return until an ack has been received from NATS Streaming
+		err = sc.Publish("foo", []byte(time.Now().Format("2006-01-02 15:04:05")))
 		if err != nil {
 			logrus.Fatalln(err)
 		}

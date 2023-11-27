@@ -37,6 +37,8 @@ func TestDuration(t *testing.T) {
 func TestTimeFormat(t *testing.T) {
 	t1 := time.Now().Format("2006-01-02 15:04:05")
 	fmt.Println(t1)
+	t1 = time.Now().Format("2006-01-02")
+	fmt.Println(t1)
 }
 
 // 指定日期转化为时间对象

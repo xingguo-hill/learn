@@ -104,7 +104,7 @@ func TestNacosClientGetConfig(t *testing.T) {
 
 /*
 *
-可结合管理页面变更测试，如果还是通过TestNacosClientPublishConfig测试，监听始终是保持的
+可结合管理页面更新测试，如果还是通过TestNacosClientPublishConfig测试，监听始终是保持的
 */
 func TestNaocosListenConfig(t *testing.T) {
 	client := newClientConfig()

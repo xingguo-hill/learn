@@ -59,7 +59,7 @@ func getTestDataIdAndGroup() (DataId string, Group string) {
 	return DataId, Group
 }
 
-func TestNacosClientPublishConfig(t *testing.T) {
+func TestPublishNacosClientConfig(t *testing.T) {
 	client := newClientConfig()
 	DataId, Group := getTestDataIdAndGroup()
 	success, err := client.PublishConfig(vo.ConfigParam{
@@ -76,7 +76,7 @@ func TestNacosClientPublishConfig(t *testing.T) {
 	time.Sleep(time.Second * 3)
 }
 
-func TestNacosClientDeleteConfig(t *testing.T) {
+func TestDeleteNacosClientConfig(t *testing.T) {
 	client := newClientConfig()
 	DataId, Group := getTestDataIdAndGroup()
 	success, err := client.DeleteConfig(vo.ConfigParam{
@@ -89,7 +89,7 @@ func TestNacosClientDeleteConfig(t *testing.T) {
 	fmt.Println(success)
 }
 
-func TestNacosClientGetConfig(t *testing.T) {
+func TestGetNacosClientConfig(t *testing.T) {
 	client := newClientConfig()
 	DataId, Group := getTestDataIdAndGroup()
 	content, err := client.GetConfig(vo.ConfigParam{
@@ -106,7 +106,7 @@ func TestNacosClientGetConfig(t *testing.T) {
 *
 可结合管理页面更新测试，如果还是通过TestNacosClientPublishConfig测试，监听始终是保持的
 */
-func TestNaocosListenConfig(t *testing.T) {
+func TestListenNacosConfig(t *testing.T) {
 	client := newClientConfig()
 	DataId, Group := getTestDataIdAndGroup()
 	chMsg := make(chan string)
@@ -140,20 +140,4 @@ func TestNaocosListenConfig(t *testing.T) {
 			}
 		}
 	}
-}
-
-func TestNacosClientDiscovery(t *testing.T) {
-
-	// // 配置Nacos服务地址等信息
-	// serverConfigs := []constant.ServerConfig{
-	// 	{
-	// 		IpAddr: "192.168.56.30",
-	// 		Port:   8848,
-	// 	},
-	// 	{
-	// 		IpAddr: "192.168.56.31",
-	// 		Port:   8848,
-	// 	},
-	// }
-
 }

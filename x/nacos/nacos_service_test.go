@@ -201,7 +201,6 @@ func TestSubscribeNacosinfo(t *testing.T) {
 		GroupName:   GroupName,
 		Clusters:    []string{ClusterName},
 		SubscribeCallback: func(services []model.Instance, err error) {
-			fmt.Printf("callback return services:%s \n\n", util.ToJsonString(services))
 			chMsg <- fmt.Sprintf("callback return services:%s \n\n", util.ToJsonString(services))
 		},
 	}

@@ -46,7 +46,6 @@ func newClientConfig() config_client.IConfigClient {
 			ServerConfigs: serverConfigs,
 		},
 	)
-
 	if err != nil {
 		panic(err)
 	}

@@ -1,6 +1,6 @@
 .DS_Store
-.mod
-.sum
+go.mod
+go.sum
 *.pb.go
 *.gw.go
 *.swagger.json

@@ -53,3 +53,22 @@ func TestRunTime(t *testing.T) {
 	fmt.Printf("TotalAlloc :%d\n", memStatus.TotalAlloc)
 	fmt.Printf("Sys:%dMB\n", memStatus.Sys/1024/1024)
 }
+
+func PrintFuncCallerInfo() {
+	pc, file, line, ok := runtime.Caller(1)
+	if !ok {
+		fmt.Println("Could not get caller info")
+		return
+	}
+
+	// 获取函数名
+	fn := runtime.FuncForPC(pc)
+	if fn == nil {
+		fmt.Println("Could not get function name")
+		return
+	}
+
+	fmt.Printf("Caller: %s\n", fn.Name())
+	fmt.Printf("File: %s\n", file)
+	fmt.Printf("Line: %d\n", line)
+}

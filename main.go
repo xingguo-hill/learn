@@ -1,7 +1,12 @@
 package main
 
-import "learn/x"
+import (
+	"fmt"
+
+	"github.com/prometheus/client_golang/prometheus"
+)
 
 func main() {
-	x.TestRedis()
+	// x.TestRedis()
+	fmt.Println(prometheus.ExponentialBuckets(0.00025, 10, 5))
 }
